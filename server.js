@@ -18,7 +18,7 @@ const connectionSQL = mysql2.createConnection({
     host: 'localhost',
     port: 3306,
     user: 'root',
-    password: '',
+    password: 'maxmax123123',
     database: 'employeesTracker_db'
 })
 
@@ -81,18 +81,27 @@ userChoice();
 
 
 function viewDeparments() {
-    const queryData = `SELECT department.name, role.title, employee.first_name, employee.last_name, employee.id
-    FROM employee
-    LEFT JOIN department ON (department.id = role.department_id)
-    LEFT JOIN role ON (role.id = employee.role_id)
-    ORDER BY department.name;`;
-    connection.query(queryData, (err, res) => {
+    const queryData = `SELECT department.name, role.title, employee.first_name, employee.last_name, employee.id FROM employee LEFT JOIN department ON (department.id = role.department_id) LEFT JOIN role ON (role.id = employee.role_id) ORDER BY department.name;`;
+    connectionSQL.query(queryData, (err, res) => {
         if (err) throw err;
         console.log('EMPLOYEE BY DEPARTMENT');
         console.table(res);
         userChoice();
     });
 }
+
+function viewEmployees() {
+    const queryData = 'SELECT employee.ID, employee.first_name, employee.last_name, role.title, role.salary, department.name FROM employee LEFT JOIN department ON (department.id = role.department_id) LEFT JOIN role ON (role.id = employee.role_id) ORDER BY employee.id'
+    connectionSQL.query(queryData, (err, res) => {
+        if (err) throw err; 
+        console.log('VIEW EMPLOYEES');
+        console.table(res);
+        userChoice();
+    });
+
+}
+
+
 
 
 
