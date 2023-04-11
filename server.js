@@ -85,7 +85,7 @@ function viewDeparments() {
     connectionSQL.query(queryData, (err, res) => {
         if (err) throw err;
         console.log('EMPLOYEE BY DEPARTMENT');
-        console.table(res);
+        consoleTable(res);
         userChoice();
     });
 }
@@ -95,13 +95,13 @@ function viewEmployees() {
     connectionSQL.query(queryData, (err, res) => {
         if (err) throw err; 
         console.log('VIEW EMPLOYEES');
-        console.table(res);
+        consoleTable(res);
         userChoice();
     });
 
 }
 
 
-
+module.exports = inquirer
 
 
