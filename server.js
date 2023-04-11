@@ -76,3 +76,23 @@ function userChoice() {
     })
 
 };
+
+userChoice();
+
+
+function viewDeparments() {
+    const queryData = `SELECT department.name, role.title, employee.first_name, employee.last_name, employee.id
+    FROM employee
+    LEFT JOIN department ON (department.id = role.department_id)
+    LEFT JOIN role ON (role.id = employee.role_id)
+    ORDER BY department.name;`;
+    connection.query(queryData, (err, res) => {
+        if (err) throw err;
+        console.log('EMPLOYEE BY DEPARTMENT');
+        console.table(res);
+        userChoice();
+    });
+}
+
+
+
