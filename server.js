@@ -91,7 +91,7 @@ function viewDeparments() {
 }
 
 function viewEmployees() {
-    const queryData = 'SELECT employee.ID, employee.first_name, employee.last_name, role.title, role.salary, department.name FROM employee LEFT JOIN department ON (department.id = role.department_id) LEFT JOIN role ON (role.id = employee.role_id) ORDER BY employee.id'
+    const queryData = 'SELECT employee.id, employee.first_name, employee.last_name, role.title, role.salary, department.name FROM employee LEFT JOIN department ON (department.id = role.department_id) LEFT JOIN role ON (role.id = employee.role_id) ORDER BY employee.id'
     connectionSQL.query(queryData, (err, res) => {
         if (err) throw err; 
         console.log('VIEW EMPLOYEES');
@@ -100,6 +100,18 @@ function viewEmployees() {
     });
 
 }
+
+
+function viewRoles() {
+    const queryData = 'SELECT role.title, role.salary, department.name, employee.first_name, employee.last_name FROM employee, LEFT JOIN role ON (role.id = emplopyee.role_id) LEFT JOIN department ON (department.id = role.department.id) ORDER BY role.title'
+    connectionSQL.query(queryData, (err, res) => {
+        if (err) throw err; 
+        console.log('EMPLOYEES BY ROLE');
+        consoleTable(res);
+        userChoice();
+    });
+}
+
 
 
 module.exports = inquirer
