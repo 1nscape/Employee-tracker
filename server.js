@@ -24,7 +24,7 @@ const connectionSQL = mysql2.createConnection({
 
 
 function userChoice() {
-    userChoice.inquirer({
+    inquirer.prompt({
         name: "choice",
         type: "list",
         message: "Please choose one of the following",
@@ -37,6 +37,7 @@ function userChoice() {
             promptMessage.addEmployee,
             promptMessage.updateEmployeeRole,
         ]
+    })
             .then(data => {
                 switch (data.choice) {
                     case promptMessage.viewDeparments:
@@ -73,7 +74,7 @@ function userChoice() {
                 }
 
             })
-    })
+    
 
 };
 
@@ -112,6 +113,42 @@ function viewRoles() {
     });
 }
 
+function addEmployee() {
+   const newEmployee = inquirer.prompt(newEmployeeName);
+   connectionSQL.query('SELECT role.id, role.title ORDER BY role.id', (err,res) => {
+    if (err) throw err;
+    inquirer.prompt((res(roleChoice))); 
+
+
+   })
+}
+
+
+function newEmployeeName() {
+    return ([{
+    name: 'first',
+    type: 'input',
+    message: 'Enter employee first name'
+
+    },
+    {
+        name: 'last',
+        type: 'input',
+        message: 'Enter employee last name' 
+    }
+
+
+])
+}
+
+
+function roleChoice() {
+    return ([{
+        name: 'role',
+        type: 'list',
+        choices: 'SELECT * FROM role'
+    }])
+}
 
 
 module.exports = inquirer
