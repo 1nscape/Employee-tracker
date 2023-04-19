@@ -19,7 +19,7 @@ const connectionSQL = mysql2.createConnection({
     port: 3306,
     user: 'root',
     password: 'maxmax123123',
-    database: 'employeesTracker_db'
+    database: 'employeesTrackers_db'
 })
 
 
@@ -82,50 +82,44 @@ userChoice();
 
 
 function viewDeparments() {
-    const queryData = `SELECT department.name, role.title, employee.first_name, employee.last_name, employee.id FROM employee LEFT JOIN department ON (department.id = role.department_id) LEFT JOIN role ON (role.id = employee.role_id) ORDER BY department.name;`;
+    const queryData = 'SELECT * FROM department'
     connectionSQL.query(queryData, (err, res) => {
-        //if (err) throw err;
+        if (err) throw err;
         console.log('EMPLOYEE BY DEPARTMENT');
         console.table(res);
         userChoice();
     });
+    
 }
 
+
 function viewEmployees() {
-    const queryData = 'SELECT employee.id, employee.first_name, employee.last_name, role.title, role.salary, department.name FROM employee LEFT JOIN department ON (department.id = role.department_id) LEFT JOIN role ON (role.id = employee.role_id) ORDER BY employee.id'
+    const queryData = 'SELECT * FROM employee'
     connectionSQL.query(queryData, (err, res) => {
         //if (err) throw err; 
         console.log('VIEW EMPLOYEES');
         console.table(res);
         userChoice();
     });
+   
 
 }
 
 
 function viewRoles() {
-    const queryData = 'SELECT role.title, role.salary, department.name, employee.first_name, employee.last_name FROM employee, LEFT JOIN role ON (role.id = emplopyee.role_id) LEFT JOIN department ON (department.id = role.department.id) ORDER BY role.title'
+    const queryData = 'SELECT * FROM role'
     connectionSQL.query(queryData, (err, res) => {
         //if (err) throw err; 
         console.log('EMPLOYEES BY ROLE');
-        console.table(res);
+       console.table(res);
         userChoice();
     });
 }
 
 function addEmployee() {
-   const newEmployee = inquirer.prompt(newEmployeeName);
-   connectionSQL.query('SELECT role.id, role.title ORDER BY role.id', (err,res) => {
-    if (err) throw err;
-    inquirer.prompt((res(roleChoice))); 
-
-
-   })
-}
-
-
-function newEmployeeName() {
-    return ([{
+   
+    const newEmployee = inquirer.prompt([{
+    
     name: 'first',
     type: 'input',
     message: 'Enter employee first name'
@@ -139,18 +133,65 @@ function newEmployeeName() {
 
 
 ])
+.then(data => {
+    let something = `INSERT INTO employee (first_name, last_name, role_id) VALUES ("${data.first}", "${data.last}", 1)`;
+    connectionSQL.query(something, (err, res) => {
+        if (err) throw err;
+       console.log('Added employee');
+       userChoice();
+    })
+    
+  }) 
 }
+  
+
+   function addRole() {
+    inquirer.prompt([{
+    name: 'role',
+    type: 'input',
+    message: "What's the roles name?"
+    
+    },
+    {
+        name:'rolesalary',
+        type: 'input',
+        message: "What's the salary?"
+    },
+
+{
+    name: 'roledepartment',
+    type:'list',
+    message :"What's the roles department?",
+    choices: ['Lead Engineer', 'Junior Engineer', 'Senior Engineer', 'UX Designer', 'Lead Designer']
+}
+]) .then(data => {
+    let somethingElse = `INSERT INTO role (title, salary, department_id) VALUES ("${data.role}", "${data.rolesalary}", 1)`
+    connectionSQL.query(somethingElse, (err, res) => {
+        if (err) throw err;
+        console.log('Added role')
+        userChoice();
+    })
+})
+   }
 
 
-function roleChoice() {
-    return ([{
-        name: 'role',
-        type: 'list',
-        choices: 'SELECT * FROM role'
+   function addDepartment() {
+     inquirer.prompt([{
+        name: 'departmentName',
+        type: 'input',
+        message: 'What is the department name?'
     }])
-}
+    .then(data => {
+        const addDepartment = `INSERT INTO department (name) VALUES ("${data.departmentName}")`
+        connectionSQL.query(addDepartment, (err, res) => {
+            if (err) throw err;
+            console.log('Added role')
+            userChoice();
+        })
+    })
+   }
+   
+
 
 
 module.exports = inquirer
-
-
