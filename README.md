@@ -7,13 +7,13 @@ This application allows the user to monitor employees, their roles, salaries and
 
 
 ## What the code looks like? 
-![image](https://user-images.githubusercontent.com/115809175/232983501-7f935a42-892c-483b-9a64-4985a6f0ae11.png)
-![image](https://user-images.githubusercontent.com/115809175/232983550-59920442-e87d-4f60-b3e6-0e8d3c83436c.png)
+![image](https://user-images.githubusercontent.com/115809175/232985909-4b28f23b-5318-4664-aa28-40c58af364a8.png)
+![image](https://user-images.githubusercontent.com/115809175/232985973-e2255312-f124-4529-afdc-538a762dafc2.png)
 
 
 ## Video
 
-https://drive.google.com/file/d/13KHa5ikzo5V8gwGRQ73iohFYRLz9rFzA/view
+https://drive.google.com/file/d/1G5srqbWHe9GhaoGyBBp5T-EhPeBNEfTM/view
 
 
 
